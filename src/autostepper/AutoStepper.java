@@ -80,7 +80,7 @@ public class AutoStepper {
         outputDir = getArg(args, "output", ".");
         if( outputDir.endsWith("/") == false ) outputDir += "/";
         input = getArg(args, "input", ".");
-        duration = Float.parseFloat(getArg(args, "duration", "90"));
+        duration = Float.parseFloat(getArg(args, "duration", "-1"));
         STARTSYNC = Float.parseFloat(getArg(args, "synctime", "0.0"));
         BPM_SENSITIVITY = Float.parseFloat(getArg(args, "bpmsensitivity", "0.05"));
         USETAPPER = getArg(args, "tap", "false").equals("true");
@@ -283,6 +283,7 @@ public class AutoStepper {
 
       // figure out how many samples are in the stream so we can allocate the correct number of spectra
       float songTime = stream.getMillisecondLength() / 1000f;
+      if( duration == -1f ) duration = songTime;
       int totalSamples = (int)( songTime * stream.getFormat().getSampleRate() );
       float timePerSample = fftSize / stream.getFormat().getSampleRate();
 
